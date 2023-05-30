@@ -19,7 +19,7 @@ import java.util.function.Function;
 public class JwtService {
     @Autowired
     private  JwtConfig jwtConfig;
-    private static final String SECRET_KEY = "68566D597133743677397A24432646294A404E635266556A586E5A7234753778214125442A472D4B6150645367566B59703373367638792F423F4528482B4D62";
+    //private static final String SECRET_KEY = "68566D597133743677397A24432646294A404E635266556A586E5A7234753778214125442A472D4B6150645367566B59703373367638792F423F4528482B4D62";
     public String extractUsername(String jwt) {
         return  extractClaim(jwt,Claims::getSubject);
     }
@@ -47,7 +47,6 @@ public class JwtService {
 
     public Boolean isTokenValid(String jwt, UserDetails userDetails) {
         final String username = extractUsername(jwt);
-        System.out.println("Here the name is -> " + username);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(jwt);
     }
     public Boolean isTokenExpired(String jwt) {
