@@ -3,6 +3,7 @@ package com.lawrenceekale.jwtspringsecurity.ExceptionsHandler;
 import com.lawrenceekale.jwtspringsecurity.models.CustomErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -29,5 +30,35 @@ public class CustomExceptionHandler {
                 .build();
 
         return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<CustomErrorResponse> handleValidationException(IllegalArgumentException ex) {
+        //create the response
+        CustomErrorResponse errorResponse = CustomErrorResponse.builder()
+                .message(ex.getMessage())
+                .build();
+
+        return  ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<CustomErrorResponse> handleValidationException(RuntimeException ex) {
+        //create the response
+        CustomErrorResponse errorResponse = CustomErrorResponse.builder()
+                .message(ex.getMessage())
+                .build();
+
+        return  ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<CustomErrorResponse> handleValidationException(UsernameNotFoundException ex) {
+        //create the response
+        CustomErrorResponse errorResponse = CustomErrorResponse.builder()
+                .message(ex.getMessage())
+                .build();
+
+        return  ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
     }
 }

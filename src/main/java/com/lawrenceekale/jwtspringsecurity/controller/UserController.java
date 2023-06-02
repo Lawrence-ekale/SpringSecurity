@@ -25,21 +25,15 @@ public class UserController {
     private final UserService userService;
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> registerUser(@Valid @RequestBody UserRegistration user) {
-        /*if(user.getFullname().isEmpty() || user.getEmail().isEmpty() || user.getPassword().isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }*/
 
         if (userExists(user.getEmail())) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+            throw new IllegalArgumentException("Please login");
         }
         return new ResponseEntity<>(userService.registerUser(user),HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> loginUser(@RequestBody @Valid UserLogin user) {
-        if(user.getEmail().isEmpty() || user.getPassword().isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
         return ResponseEntity.ok(userService.loginUser(user));
     }
 

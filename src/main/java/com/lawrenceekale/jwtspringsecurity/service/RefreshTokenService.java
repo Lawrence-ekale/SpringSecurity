@@ -1,7 +1,6 @@
 package com.lawrenceekale.jwtspringsecurity.service;
 
 import com.lawrenceekale.jwtspringsecurity.entity.RefreshToken;
-import com.lawrenceekale.jwtspringsecurity.models.RefreshTokenRequest;
 import com.lawrenceekale.jwtspringsecurity.repository.RefreshTokenRepository;
 import com.lawrenceekale.jwtspringsecurity.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ public class RefreshTokenService {
         RefreshToken ref =  RefreshToken.builder()
                 .user(userRepository.findByEmail(username).get())
                 .token(UUID.randomUUID().toString())
-                .expirydate(Instant.now().plusMillis(600000))// 5 minutes
+                .expirydate(Instant.now().plusMillis(600000))// 10 minutes
                 .build();
 
        return  refreshTokenRepository.save(ref);

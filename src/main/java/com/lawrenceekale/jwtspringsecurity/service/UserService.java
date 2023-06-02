@@ -35,7 +35,6 @@ public class UserService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final AuthenticationManager authenticationManager;
     public AuthenticationResponse registerUser(UserRegistration user) {
-        //check if all fields have been provided
         var userToRegister = User.builder()
                 .fullname(user.getFullname())
                 .email(user.getEmail())
@@ -45,7 +44,6 @@ public class UserService {
         userRepository.save(userToRegister);
         return AuthenticationResponse.builder()
                 .token("User registered Successfully")
-                .refreshToken("")
                 .build();
     }
 
